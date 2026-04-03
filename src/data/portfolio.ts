@@ -58,8 +58,8 @@ export const projects = [
     gradient: "from-indigo-500 to-purple-600",
     accent: "#a855f7",
     emoji: "🧠",
-    github: "https://github.com/shivangmishra/mindpath",
-    demo: "#",
+    github: "https://github.com/Shivang-Mishra-20/MindPath",
+    
   },
   {
     id: 2,
@@ -79,8 +79,8 @@ export const projects = [
     gradient: "from-cyan-500 to-blue-600",
     accent: "#3b82f6",
     emoji: "🏫",
-    github: "https://github.com/shivangmishra/campusconnect",
-    demo: "#",
+    github: "https://github.com/Shivang-Mishra-20/Campus-Connect-Lite",
+    
   },
 ];
 
