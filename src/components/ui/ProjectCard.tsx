@@ -15,6 +15,7 @@ interface Project {
   accent: string;
   emoji: string;
   github: string;
+  demo: string;
 }
 
 export default function ProjectCard({ project, index }: { project: Project; index: number }) {
@@ -145,6 +146,14 @@ export default function ProjectCard({ project, index }: { project: Project; inde
             whileTap={{ scale: 0.97 }}
           >
             <FiGithub size={14} /> Code
+          </motion.a>
+          <motion.a
+            href={project.demo}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-600 border border-slate-200 hover:border-slate-300 transition-all"
+            whileHover={{ scale: 1.05, y: -1 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            <FiExternalLink size={14} /> Live Demo
           </motion.a>
           <div className="ml-auto">
             <FiArrowRight
