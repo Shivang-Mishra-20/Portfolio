@@ -1,9 +1,3 @@
-# Shivang Mishra — Developer Portfolio
-
-A stunning, award-worthy developer portfolio built with Next.js 14, Three.js, Framer Motion, and TailwindCSS. Designed to feel like an Awwwards finalist — vibrant, animated, and deeply interactive.
-
----
-
 ## ✨ Features
 
 - **3D Hero Scene** — Interactive rotating geometric mesh with orbiting rings and floating particles (Three.js + React Three Fiber)
