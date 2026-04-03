@@ -1,8 +1,22 @@
 "use client";
 import { useState, useRef, FormEvent } from "react";
 import { motion, useInView } from "framer-motion";
-import { FiMail, FiLinkedin, FiGithub, FiSend, FiCheck, FiAlertCircle } from "react-icons/fi";
-import { fadeInUp, fadeInLeft, fadeInRight, staggerContainer } from "@/animations/variants";
+import {
+  FiMail,
+  FiLinkedin,
+  FiGithub,
+  FiSend,
+  FiCheck,
+  FiAlertCircle,
+} from "react-icons/fi";
+// 1. IMPORT EMAILJS
+import emailjs from "@emailjs/browser";
+import {
+  fadeInUp,
+  fadeInLeft,
+  fadeInRight,
+  staggerContainer,
+} from "@/animations/variants";
 import { personalInfo } from "@/data/portfolio";
 
 type Status = "idle" | "sending" | "success" | "error";
@@ -10,22 +24,47 @@ type Status = "idle" | "sending" | "success" | "error";
 export default function ContactSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
   const [status, setStatus] = useState<Status>("idle");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  // 2. UPDATED HANDLESUBMIT
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setStatus("sending");
-    // EmailJS integration point — replace with your credentials
-    // await emailjs.send(SERVICE_ID, TEMPLATE_ID, form, PUBLIC_KEY);
-    await new Promise((r) => setTimeout(r, 1500));
-    setStatus("success");
-    setTimeout(() => setStatus("idle"), 5000);
-    setForm({ name: "", email: "", subject: "", message: "" });
+
+    try {
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        {
+          name: form.name,
+          email: form.email,
+          subject: form.subject,
+          message: form.message,
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!,
+      );
+
+      setStatus("success");
+      setForm({ name: "", email: "", subject: "", message: "" });
+    } catch (error) {
+      console.error("Email Error:", error);
+      setStatus("error");
+    } finally {
+      // Return button to normal state after 5 seconds
+      setTimeout(() => setStatus("idle"), 5000);
+    }
   };
 
   const socials = [
@@ -57,7 +96,7 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="py-32 bg-white relative overflow-hidden">
-      {/* Background */}
+      {/* Background Decor */}
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[800px] h-[400px] opacity-10 rounded-full blur-3xl"
@@ -74,17 +113,25 @@ export default function ContactSection() {
           className="text-center mb-20"
         >
           <motion.div variants={fadeInUp}>
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-indigo-600 mb-4"
-              style={{ background: "rgba(99,102,241,0.08)" }}>
+            <span
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-indigo-600 mb-4"
+              style={{ background: "rgba(99,102,241,0.08)" }}
+            >
               ✦ Get In Touch
             </span>
           </motion.div>
-          <motion.h2 variants={fadeInUp} className="text-5xl font-display font-bold text-slate-900 mb-4">
+          <motion.h2
+            variants={fadeInUp}
+            className="text-5xl font-display font-bold text-slate-900 mb-4"
+          >
             Let's <span className="text-slate-900">Work Together</span>
           </motion.h2>
-          <motion.p variants={fadeInUp} className="text-xl text-slate-500 max-w-2xl mx-auto">
-            Have a project in mind? Looking for a developer who bridges frontend engineering with
-            AI? I'd love to hear from you.
+          <motion.p
+            variants={fadeInUp}
+            className="text-xl text-slate-500 max-w-2xl mx-auto"
+          >
+            Have a project in mind? Looking for a developer who bridges frontend
+            engineering with AI? I'd love to hear from you.
           </motion.p>
         </motion.div>
 
@@ -96,20 +143,19 @@ export default function ContactSection() {
             animate={isInView ? "visible" : "hidden"}
             className="lg:col-span-2 space-y-6"
           >
-            {/* Message */}
             <motion.div variants={fadeInLeft}>
               <h3 className="text-2xl font-display font-bold text-slate-900 mb-3">
                 Open to opportunities
               </h3>
               <p className="text-slate-500 leading-relaxed">
-                I'm actively looking for internships, freelance projects, and full-time roles
-                where I can contribute meaningfully with my skills.
+                I'm actively looking for internships, freelance projects, and
+                full-time roles where I can contribute meaningfully with my
+                skills.
               </p>
             </motion.div>
 
-            {/* Social cards */}
             <div className="space-y-4">
-              {socials.map(({ icon: Icon, label, value, href, color, bg }, i) => (
+              {socials.map(({ icon: Icon, label, value, href, color, bg }) => (
                 <motion.a
                   key={label}
                   href={href}
@@ -127,17 +173,20 @@ export default function ContactSection() {
                     <Icon size={20} className="text-white" />
                   </div>
                   <div>
-                    <div className="text-xs text-slate-400 font-medium">{label}</div>
+                    <div className="text-xs text-slate-400 font-medium">
+                      {label}
+                    </div>
                     <div className="text-sm font-semibold text-slate-700 group-hover:text-indigo-600 transition-colors">
                       {value}
                     </div>
                   </div>
-                  <div className="ml-auto text-slate-300 group-hover:text-indigo-400 transition-colors">→</div>
+                  <div className="ml-auto text-slate-300 group-hover:text-indigo-400 transition-colors">
+                    →
+                  </div>
                 </motion.a>
               ))}
             </div>
 
-            {/* Availability indicator */}
             <motion.div
               variants={fadeInLeft}
               className="p-5 rounded-2xl border border-green-100"
@@ -145,10 +194,13 @@ export default function ContactSection() {
             >
               <div className="flex items-center gap-3">
                 <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-sm font-semibold text-green-700">Available for hire</span>
+                <span className="text-sm font-semibold text-green-700">
+                  Available for hire
+                </span>
               </div>
               <p className="text-xs text-green-600 mt-2">
-                Currently open to internships & freelance projects starting immediately.
+                Currently open to internships & freelance projects starting
+                immediately.
               </p>
             </motion.div>
           </motion.div>
@@ -168,8 +220,18 @@ export default function ContactSection() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
-                    { name: "name", label: "Your Name", type: "text", placeholder: "John Doe" },
-                    { name: "email", label: "Email Address", type: "email", placeholder: "john@example.com" },
+                    {
+                      name: "name",
+                      label: "Your Name",
+                      type: "text",
+                      placeholder: "John Doe",
+                    },
+                    {
+                      name: "email",
+                      label: "Email Address",
+                      type: "email",
+                      placeholder: "john@example.com",
+                    },
                   ].map(({ name, label, type, placeholder }) => (
                     <div key={name}>
                       <label className="block text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">
@@ -226,8 +288,8 @@ export default function ContactSection() {
                       status === "success"
                         ? "linear-gradient(135deg, #10b981, #059669)"
                         : status === "error"
-                        ? "linear-gradient(135deg, #ef4444, #dc2626)"
-                        : "linear-gradient(135deg, #6366F1, #4f46e5)",
+                          ? "linear-gradient(135deg, #ef4444, #dc2626)"
+                          : "linear-gradient(135deg, #6366F1, #4f46e5)",
                   }}
                   whileHover={status === "idle" ? { scale: 1.02, y: -1 } : {}}
                   whileTap={status === "idle" ? { scale: 0.98 } : {}}
