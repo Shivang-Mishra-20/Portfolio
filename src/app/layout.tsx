@@ -21,7 +21,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Shivang Mishra — Frontend Developer & AI/ML Enthusiast",
+  title: "Shivang Mishra - Portfolio",
   description:
     "Portfolio of Shivang Mishra, a Frontend Developer and AI/ML Enthusiast building modern web interfaces and intelligent systems.",
   keywords: ["frontend developer", "AI/ML", "React", "Next.js", "portfolio", "VIT Bhopal"],

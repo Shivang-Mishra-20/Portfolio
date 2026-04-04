@@ -23,7 +23,7 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center overflow-hidden"
+      className="relative min-h-[80vh] flex items-center overflow-hidden"
       style={{ background: "linear-gradient(135deg, #F8FAFC 0%, #EEF2FF 50%, #F0FDFF 100%)" }}
     >
       {/* Background blobs */}
@@ -75,7 +75,7 @@ export default function HeroSection() {
               <p className="text-sm font-mono font-medium text-cyan-600 tracking-wider uppercase">
                 Hello, I'm
               </p>
-              <h1 className="text-6xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight leading-none">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-none">
                 <span className="text-slate-900">Shivang</span>
                 <br />
                 <span className="text-slate-900">Mishra</span>
@@ -208,16 +208,6 @@ export default function HeroSection() {
               transition={{ delay: 1.5 }}
               className="absolute top-10 right-4 glass rounded-2xl p-4 shadow-xl border border-white/80"
             >
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center text-sm"
-                  style={{ background: "linear-gradient(135deg, #F59E0B, #F472B6)" }}>
-                  🤖
-                </div>
-                <div>
-                  <div className="text-xs text-slate-500">Specialization</div>
-                  <div className="text-sm font-semibold text-slate-800">Web Development</div>
-                </div>
-              </div>
             </motion.div>
           </motion.div>
         </div>

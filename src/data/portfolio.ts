@@ -59,11 +59,10 @@ export const projects = [
     accent: "#a855f7",
     emoji: "🧠",
     github: "https://github.com/Shivang-Mishra-20/MindPath",
-    demo: "#",
   },
   {
     id: 2,
-    title: "CampusConnect",
+    title: "Campus Connect Lite",
     subtitle: "Mini ERP System",
     description:
       "A comprehensive campus management ERP built to digitize and automate administrative operations for educational institutions.",
@@ -80,7 +79,6 @@ export const projects = [
     accent: "#3b82f6",
     emoji: "🏫",
     github: "https://github.com/Shivang-Mishra-20/Campus-Connect-Lite",
-    demo: "#",
   },
 ];
 

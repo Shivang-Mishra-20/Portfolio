@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { FiExternalLink, FiGithub, FiArrowRight } from "react-icons/fi";
+import { FiExternalLink, FiGithub} from "react-icons/fi";
 
 interface Project {
   id: number;
@@ -15,10 +15,15 @@ interface Project {
   accent: string;
   emoji: string;
   github: string;
-  demo: string;
 }
 
-export default function ProjectCard({ project, index }: { project: Project; index: number }) {
+export default function ProjectCard({
+  project,
+  index,
+}: {
+  project: Project;
+  index: number;
+}) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
@@ -42,7 +47,11 @@ export default function ProjectCard({ project, index }: { project: Project; inde
       initial={{ opacity: 0, y: 80 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.7, delay: index * 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{
+        duration: 0.7,
+        delay: index * 0.15,
+        ease: [0.25, 0.46, 0.45, 0.94],
+      }}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
@@ -64,7 +73,9 @@ export default function ProjectCard({ project, index }: { project: Project; inde
       {/* Top gradient banner */}
       <div
         className="h-56 relative overflow-hidden"
-        style={{ background: `linear-gradient(135deg, ${project.color}20, ${project.accent}30)` }}
+        style={{
+          background: `linear-gradient(135deg, ${project.color}20, ${project.accent}30)`,
+        }}
       >
         {/* Pattern */}
         <div
@@ -78,7 +89,9 @@ export default function ProjectCard({ project, index }: { project: Project; inde
         {/* Large emoji */}
         <div className="absolute inset-0 flex items-center justify-center">
           <motion.div
-            animate={isHovered ? { scale: 1.2, rotate: 10 } : { scale: 1, rotate: 0 }}
+            animate={
+              isHovered ? { scale: 1.2, rotate: 10 } : { scale: 1, rotate: 0 }
+            }
             transition={{ duration: 0.3 }}
             className="text-8xl opacity-60"
           >
@@ -116,9 +129,15 @@ export default function ProjectCard({ project, index }: { project: Project; inde
       {/* Content */}
       <div className="p-7">
         <div className="mb-4">
-          <div className="text-xs font-mono font-medium text-slate-400 mb-1">{project.subtitle}</div>
-          <h3 className="text-2xl font-display font-bold text-slate-900 mb-3">{project.title}</h3>
-          <p className="text-sm text-slate-500 leading-relaxed">{project.description}</p>
+          <div className="text-xs font-mono font-medium text-slate-400 mb-1">
+            {project.subtitle}
+          </div>
+          <h3 className="text-2xl font-display font-bold text-slate-900 mb-3">
+            {project.title}
+          </h3>
+          <p className="text-sm text-slate-500 leading-relaxed">
+            {project.description}
+          </p>
         </div>
 
         {/* Features */}
@@ -140,27 +159,18 @@ export default function ProjectCard({ project, index }: { project: Project; inde
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all"
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open(project.github, "_blank");
+            }}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all relative z-50 pointer-events-auto"
             style={{ background: project.color }}
             whileHover={{ scale: 1.05, y: -1 }}
             whileTap={{ scale: 0.97 }}
           >
             <FiGithub size={14} /> Code
           </motion.a>
-          <motion.a
-            href={project.demo}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-600 border border-slate-200 hover:border-slate-300 transition-all"
-            whileHover={{ scale: 1.05, y: -1 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            <FiExternalLink size={14} /> Live Demo
-          </motion.a>
-          <div className="ml-auto">
-            <FiArrowRight
-              className="text-slate-300 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all duration-200"
-              size={18}
-            />
-          </div>
+          
         </div>
       </div>
     </motion.div>
